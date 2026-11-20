@@ -6,7 +6,7 @@ export interface NewUser {
   password: string;
 }
 
-/** Унікальний користувач для кожного прогону — тести не залежать один від одного. */
+/** A unique user for every run, so tests don't depend on each other. */
 export function buildUser(overrides: Partial<NewUser> = {}): NewUser {
   const suffix = `${Date.now()}${faker.number.int({ min: 100, max: 999 })}`;
   return {

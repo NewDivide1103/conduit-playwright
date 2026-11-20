@@ -24,20 +24,20 @@ export default defineConfig({
   },
 
   projects: [
-    // 1. Логін через API один раз → зберігаємо storageState
+    // 1. Log in via the API once → save storageState
     {
       name: 'setup',
       testMatch: /.*\.setup\.ts/,
     },
 
-    // 2. Чисті API тести — без браузера
+    // 2. Pure API tests, no browser
     {
       name: 'api',
       testMatch: /api\/.*\.spec\.ts/,
       use: { baseURL: env.apiUrl + '/' },
     },
 
-    // 3. UI / e2e тести — вже залогінені через storageState
+    // 3. UI / e2e tests, already logged in via storageState
     ...[
       { name: 'chromium', device: devices['Desktop Chrome'] },
       { name: 'firefox', device: devices['Desktop Firefox'] },

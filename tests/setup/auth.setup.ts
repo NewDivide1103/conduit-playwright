@@ -5,9 +5,9 @@ import { env, STORAGE_STATE, USER_FILE } from '../../src/config/env';
 import { loginOrRegister } from '../../src/api/auth.api';
 
 /**
- * Логін через API замість UI: швидко і стабільно.
- * Conduit тримає JWT у localStorage під ключем `jwtToken`,
- * тож storageState збираємо напряму з відповіді API.
+ * Log in via the API instead of the UI: fast and stable.
+ * Conduit keeps the JWT in localStorage under the `jwtToken` key,
+ * so we build storageState directly from the API response.
  */
 setup('authenticate via API', async ({ request }) => {
   const user = await loginOrRegister(request);
@@ -21,6 +21,6 @@ setup('authenticate via API', async ({ request }) => {
       origins: [{ origin: env.baseUrl, localStorage: [{ name: 'jwtToken', value: user.token }] }],
     }),
   );
-  // username/token знадобляться тестам і API-фікстурам
+  // Tests and API fixtures will need the username/token
   fs.writeFileSync(USER_FILE, JSON.stringify(user));
 });

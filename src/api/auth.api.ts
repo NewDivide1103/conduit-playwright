@@ -9,8 +9,8 @@ export interface AuthedUser {
 }
 
 /**
- * Логін постійним акаунтом із .env / GitHub Secrets,
- * або — якщо кредів немає — реєстрація нового користувача.
+ * Log in with the permanent account from .env / GitHub Secrets,
+ * or register a new user if no credentials are set.
  */
 export async function loginOrRegister(request: APIRequestContext): Promise<AuthedUser> {
   const hasCreds = Boolean(env.userEmail && env.userPassword);

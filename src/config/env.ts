@@ -6,7 +6,7 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env'), quiet: true });
 export const env = {
   baseUrl: process.env.BASE_URL ?? 'https://conduit.bondaracademy.com',
   apiUrl: process.env.API_URL ?? 'https://conduit-api.bondaracademy.com/api',
-  /** Якщо не задано — auth.setup зареєструє нового користувача через API. */
+  /** If not set, auth.setup registers a new user via the API. */
   userEmail: process.env.CONDUIT_EMAIL,
   userPassword: process.env.CONDUIT_PASSWORD,
 };
