@@ -54,6 +54,7 @@ Scripts: `npm test`, `test:smoke`, `test:api`, `test:ui`, `test:chromium`, `repo
 - **Secrets:** `.env` locally, GitHub Secrets in CI. `.env` and `playwright/.auth/` are in `.gitignore`.
 - **Language:** everything in the repository is in English: code, comments, commit messages, docs, and prompts (agent definitions, test plans in `specs/`).
 - **Before committing:** `npm run lint`, `npm run typecheck`, `npm run format:check`, `npx playwright test` must all pass.
+- **Roadmap:** when a stage is finished, mark it done in both `README.md` and `CLAUDE.md` in the same commit.
 
 ## Test case backlog
 
@@ -67,7 +68,7 @@ Scripts: `npm test`, `test:smoke`, `test:api`, `test:ui`, `test:chromium`, `repo
 ## Roadmap
 
 1. ✅ **Setup:** project, config, API login, smoke tests, ESLint/Prettier, CI, English README.
-2. **First test and locators:** case 2 without POM, practice Pick locator / codegen.
+2. ✅ **First test and locators:** case 2 without POM, practice Pick locator / codegen.
 3. **POM and fixtures:** extract pages, rewrite cases 1, 2, 5.
 4. **Parameterization:** cases 3, 4, 9, 10, 18.
 5. **API layer:** ApiClient, cases 18–21, then UI cases 6–8 and 14–17 with data created via the API.

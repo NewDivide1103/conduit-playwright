@@ -155,7 +155,7 @@ To use a permanent test account in CI, add `CONDUIT_EMAIL` and `CONDUIT_PASSWORD
 ## Roadmap
 
 - [x] Project setup, API authentication, smoke tests, linting, CI
-- [ ] Login tests and locator practice
+- [x] Login tests and locator practice
 - [ ] Page Objects and custom fixtures
 - [ ] Parameterized tests (negative login and registration, editor validation, tags)
 - [ ] API client and API test suite (articles, comments, profiles, schema validation)
