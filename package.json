@@ -1,0 +1,34 @@
+{
+  "name": "conduit-playwright",
+  "version": "1.0.0",
+  "description": "Playwright + TypeScript test automation for Conduit (RealWorld)",
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:api": "playwright test --project=api",
+    "test:ui": "playwright test --ui",
+    "test:chromium": "playwright test --project=chromium",
+    "report": "playwright show-report",
+    "codegen": "playwright codegen https://conduit.bondaracademy.com",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@faker-js/faker": "^10.6.0",
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^26.6.6",
+    "dotenv": "^18.0.10",
+    "eslint": "^10.15.0",
+    "eslint-plugin-playwright": "^2.12.2",
+    "prettier": "^3.10.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.73.0"
+  }
+}
