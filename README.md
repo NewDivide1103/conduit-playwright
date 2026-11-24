@@ -16,6 +16,7 @@ fixtures, data-driven (parameterized) tests, API-backed test setup, CI on GitHub
 - [Running tests](#running-tests)
 - [Project structure](#project-structure)
 - [How authentication works](#how-authentication-works)
+- [Page Objects and fixtures](#page-objects-and-fixtures)
 - [Test conventions](#test-conventions)
 - [Continuous integration](#continuous-integration)
 - [Roadmap](#roadmap)
@@ -123,7 +124,36 @@ Logging in through the UI before every test is slow and flaky, so the project lo
    `storageState` file: `playwright/.auth/user.json`. User details go to `playwright/.auth/user.meta.json`.
 4. Browser projects depend on `setup` and load that `storageState`, so every UI test starts already signed in.
 
-Tests that check the login form itself should opt out with `test.use({ storageState: { cookies: [], origins: [] } })`.
+Tests that check the login form itself should opt out with `test.use({ storageState: LOGGED_OUT })` (exported from
+`src/fixtures`).
+
+## Page Objects and fixtures
+
+Tests never build locators for shared UI themselves; they get Page Objects from fixtures:
+
+```ts
+import { test, expect } from '../../src/fixtures';
+
+test('user logs in', async ({ loginPage, homePage, newUser }) => {
+  await loginPage.goto();
+  await loginPage.login(newUser.email, newUser.password);
+  await expect(homePage.nav.profileLink(newUser.username)).toBeVisible();
+});
+```
+
+- **Page Objects** ([`src/pages`](src/pages)) extend `BasePage` (`path`, `goto()`, the shared `nav` and
+  `getAuthToken()`). They expose locators as `readonly` fields and user actions as methods, and contain **no
+  assertions**.
+- **Components** ([`src/components`](src/components)) are reusable parts of a page: the header `NavBar`, an
+  `ArticlePreview` card and the feed `Pagination`.
+- **Fixtures** ([`src/fixtures`](src/fixtures)) are combined with `mergeTests`, and every test imports `test` and
+  `expect` from `src/fixtures` instead of `@playwright/test`:
+
+| Fixture                                                                | Provides                                                                  |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `homePage`, `articlePage`, `loginPage`, `registerPage`, `settingsPage` | A Page Object bound to the test's `page`                                  |
+| `authedUser`                                                           | Username, email and token of the user the browser is logged in as         |
+| `newUser`                                                              | A fresh user registered via the API, with the password for UI login tests |
 
 ## Test conventions
 
@@ -156,7 +186,7 @@ To use a permanent test account in CI, add `CONDUIT_EMAIL` and `CONDUIT_PASSWORD
 
 - [x] Project setup, API authentication, smoke tests, linting, CI
 - [x] Login tests and locator practice
-- [ ] Page Objects and custom fixtures
+- [x] Page Objects and custom fixtures
 - [ ] Parameterized tests (negative login and registration, editor validation, tags)
 - [ ] API client and API test suite (articles, comments, profiles, schema validation)
 - [ ] CI: browser matrix, sharding, merged reports, GitHub Pages

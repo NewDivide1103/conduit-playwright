@@ -1,7 +1,9 @@
 # Login: test plan and locator practice
 
-Backlog case 2. Implemented in [`tests/ui/login.spec.ts`](../tests/ui/login.spec.ts), without Page Objects on
-purpose (roadmap stage 2). Page Objects come in stage 3, the parameterized negative cases (case 3) in stage 4.
+Backlog case 2. Implemented in [`tests/ui/login.spec.ts`](../tests/ui/login.spec.ts). Written without Page Objects
+in roadmap stage 2 to practice locators; since stage 3 the locators below live in
+[`LoginPage`](../src/pages/login.page.ts) and [`NavBar`](../src/components/nav-bar.component.ts). The parameterized
+negative cases (case 3) come in stage 4.
 
 ## Scenarios
 
@@ -11,7 +13,8 @@ purpose (roadmap stage 2). Page Objects come in stage 3, the parameterized negat
 | 2.2 | **Sign in** is disabled until form is filled | Any email + password          | Disabled when empty and with email only; enabled once both fields are filled                             | `@regression`           |
 | 2.3 | Wrong password                               | Registered user, bad password | Error `email or password is invalid`; stays on `/login`; still logged out                                | `@regression`           |
 
-All tests run logged out: `test.use({ storageState: { cookies: [], origins: [] } })`.
+All tests run logged out: `test.use({ storageState: LOGGED_OUT })`. The user is created via the API by the `newUser`
+fixture.
 
 ## Locators on `/login`
 
@@ -34,7 +37,7 @@ What the page exposes to the accessibility tree (from `locator('body').ariaSnaps
 | Email         | `getByRole('textbox', { name: 'Email' })`             | No `<label>`, but the placeholder becomes the accessible name, so the role locator works      |
 | Password      | `getByRole('textbox', { name: 'Password' })`          | Same; `type="password"` inputs still have the `textbox` role                                  |
 | Submit        | `getByRole('button', { name: 'Sign in' })`            | Role `button` excludes the nav **link** with the same text                                    |
-| Error message | `getByText('email or password is invalid')`           | A plain `<li>` with no role-specific name or test id; text is the most user-facing option     |
+| Error message | `locator('.error-messages').getByRole('listitem')`    | The `<ul>` has no name or test id; CSS scopes it, `toHaveText([...])` checks the full list    |
 | Nav links     | `getByRole('navigation').getByRole('link', …)`        | Chaining scopes the search to the header, so footer/body links with the same name don't match |
 
 Rejected alternatives: `getByPlaceholder('Email')` (works, but lower priority than role), `getByLabel('Email')`

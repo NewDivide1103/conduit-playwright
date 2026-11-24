@@ -48,7 +48,7 @@ Scripts: `npm test`, `test:smoke`, `test:api`, `test:ui`, `test:chromium`, `repo
 - **Assertions:** web-first only (`await expect(locator).toBeVisible()`). No `waitForTimeout`, `force: true`, or `if` in tests.
 - **Isolation:** each test creates its own unique data (faker) and cleans it up via the API in fixture teardown.
 - **Login:** once via the API in `setup` → `storageState`. UI tests do not log in through the form, except tests of the login itself (they disable `storageState`). If `CONDUIT_EMAIL` / `CONDUIT_PASSWORD` are not set, a new user is registered.
-- **Test structure:** fixtures instead of `beforeEach`; no assertions inside Page Objects.
+- **Test structure:** fixtures instead of `beforeEach`; no assertions inside Page Objects. Tests import `test` / `expect` from `src/fixtures` (merged with `mergeTests`); Page Objects extend `BasePage` and expose `readonly` locators plus action methods; shared UI goes into `src/components`. Logged-out tests use `test.use({ storageState: LOGGED_OUT })`.
 - **Parameterization:** `for (const data of cases) test(...)`, with data in `src/data`.
 - **Tags:** `@smoke`, `@regression`, `@api` for `--grep`.
 - **Secrets:** `.env` locally, GitHub Secrets in CI. `.env` and `playwright/.auth/` are in `.gitignore`.
@@ -69,7 +69,7 @@ Scripts: `npm test`, `test:smoke`, `test:api`, `test:ui`, `test:chromium`, `repo
 
 1. ✅ **Setup:** project, config, API login, smoke tests, ESLint/Prettier, CI, English README.
 2. ✅ **First test and locators:** case 2 without POM, practice Pick locator / codegen.
-3. **POM and fixtures:** extract pages, rewrite cases 1, 2, 5.
+3. ✅ **POM and fixtures:** extract pages, rewrite cases 1, 2, 5.
 4. **Parameterization:** cases 3, 4, 9, 10, 18.
 5. **API layer:** ApiClient, cases 18–21, then UI cases 6–8 and 14–17 with data created via the API.
 6. **CI:** secrets → matrix / sharding + merged blob reports → report published to GitHub Pages, nightly run.
