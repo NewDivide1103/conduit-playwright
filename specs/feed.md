@@ -2,7 +2,12 @@
 
 ## Application Overview
 
-Backlog case 11 for Conduit (https://conduit.bondaracademy.com). Seed file: `tests/ui/seed.spec.ts` (the `setup` project logs in via the API, so UI tests start authenticated on `/`). Planned file: `tests/ui/feed.spec.ts`. Anonymous scenarios use `test.use({ storageState: { cookies: [], origins: [] } })`.
+Backlog case 11 for Conduit (https://conduit.bondaracademy.com). Seed file: `tests/ui/seed.spec.ts` (the `setup` project logs in via the API, so UI tests start authenticated on `/`). Implemented in `tests/ui/feed.spec.ts` (11.1–11.6). Anonymous scenarios use `test.use({ storageState: LOGGED_OUT })`.
+
+Since roadmap stage 3 the locators in the table below live in Page Objects, not in the spec:
+[`HomePage`](../src/pages/home.page.ts) (tabs, previews, Popular Tags, `openGlobalFeed()` / `openAndCaptureTags()`
+that return the response the page received), [`ArticlePreview`](../src/components/article-preview.component.ts),
+[`Pagination`](../src/components/pagination.component.ts) and [`ArticlePage`](../src/pages/article.page.ts).
 
 ## Scenarios table
 
